@@ -1,5 +1,5 @@
 body{
-    background-color: black;
+    background-color: blueviolet;
 }
 h1{
     text-align: center;
@@ -7,8 +7,18 @@ h1{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: whitesmoke;
 }
-.foto1{
+h2{
     text-align: center;
+    font-size: 34;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: whitesmoke;
 }
+.ingreso-datos {
+    background-color: blueviolet;
+    text-align: center;
+    font-size: 34;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: whitesmoke;
+    padding: 100px;
 
-
+}
