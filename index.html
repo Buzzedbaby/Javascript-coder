@@ -13,77 +13,59 @@
     <header>
         <h1>Mis gastos</h1>
     </header>
-    
-    <form class="ingreso-datos">
-        <h2>Tipo de transacción</h2>
 
+    <form  id="transactionForm" class="ingreso-datos">
+        <p>Tipo de Transacción</p>
 
-        <div class="form-group">
-            <label for="formGroupExampleInput2">Monto total del presupuesto</label>
-            <input type="number" class="form-control" id="formGroupExampleInput2" placeholder="$150000">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" name="ransactionType" id="inlineRadio1" id="radio1" value="option1">
+            <label class="form-check-label" for="inlineRadio1">Ingreso</label>
         </div>
-    
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions"  name="ransactionType"  id="inlineRadio2" id="radio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">Egreso</label>
+        </div>
+
         <div class="form-group">
             <label for="formGroupExampleInput">Descripción</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Compra de una remera">
+            <input type="text" class="form-control" id="formGroupExampleInput" id="transactionDescription" placeholder="Compra de una remera">
         </div>
+
         <div class="form-group">
             <label for="formGroupExampleInput2">Monto</label>
-            <input type="number" class="form-control" id="formGroupExampleInput2" placeholder="2000">
+            <input type="number" class="form-control" id="formGroupExampleInput2"  id="transactionAmount" placeholder="2000">
         </div>
     
         <div class="form-group">
             <label for="exampleFormControlSelect1">Categoría</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Vivieda</option>
-              <option>Mercado</option>
-              <option>Salida</option>
-              <option>Ropa/Accesorios</option>
-              <option>Otros</option>
-            </select>
-        </div>
-
+            <select id="transactionCategory" class="custom-select">
+                <option value="1">Vivienda</option>
+                <option value="2">Salario</option>
+                <option value="3">Mercado</option>
+                <option value="3">Ropa</option>
+                <option value="3">Salidas</option>
+                <option value="3">Otros</option>
+              </select>
+       
             <div class="col-auto my-1">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button id="botonDeEnvio" type="submit" class="btn btn-primary">Enviar</button>
             </div>
     </form>
 
-    <div>
-        <table class="table" id="tabla-gastos">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">PRESUPUESTO</th>
-                <th scope="col">DESCRIPCIÓN</th>
-                <th scope="col">MONTO</th>
-                <th scope="col">CATEGORÍA</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-    </div>
-
-
-
-
+    <div class="col l5 offset-l1 s12">
+        <table id="transactionTable">
+          <h4>Historial de transacciones</h4>
+          <thead>
+            <tr>
+              <th scope="col">Tipo</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Categoria</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
 
     <!--Magic Here-->
     <script src="main.js"></script>

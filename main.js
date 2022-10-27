@@ -1,101 +1,4 @@
-/*simulador que permite calcular el total de gastos en un area específica
-alert("Calculadora de gastos")
-
-const usuarioAutorizado = "Walter";
-const contraseniaAutorizada = "4001";
-
-let usuario= prompt ("Ingresa tu usuario");
-let contrasenia = prompt("Ingresa tu contraseña");
-
-if(usuario === usuarioAutorizado && contrasenia === contraseniaAutorizada) {
-    alert ("Hola, bienvenido " + usuario);
-    let cantidadGastos = parseInt(prompt("Ingresa la cantidad de gastos a calcular"));
-
-    for(let i = 0; i <cantidadGastos; i++) {
-        let tipoGastos = (prompt("Ingresá el tipo de gasto"));
-        let gasto1 = parseInt(prompt("Ingresá el monto del gasto1:"));
-        let gasto2 = parseInt(prompt("Ingresá el monto del gasto2:")); 
-        let gasto3 = parseInt(prompt("Ingresá el monto del gasto2:")); 
-        let totalGastos = calcularTotal(gasto1, gasto2, gasto3);
-        alert("El total de " + tipoGastos + " es " + totalGastos);
-
-        let mucho = gastoMucho (totalGastos);
-        if(mucho) {
-            alert(tipoGastos + ": Estás gastando mucho en esto");
-        }
-        else {
-            alert(tipoGastos + ": Todavía podes seguir gastando");
-        }
-    }
-}
-else{ 
-    alert("Usuario o Contraseña incorrecta");
-    }
-
-//Funciones
-
-function calcularTotal (gasto1, gasto2, gasto3) {
-    let totalGastos = gasto1 + gasto2 + gasto3;
-    return totalGastos;
-}
-
-function gastoMucho(totalGastos){
-    if (totalGastos >= 5000) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-
 /*
-for(let i=1; 1<=3; 1++){
-    let usuario= prompt("Ingresa tu usuario");
-    let contrasenia=prompt("Ingresa tu contraseña para " +usuario);
-    if((usuario=="Walter")&&(contrasenia=="1234")){
-        console.log("Bienvenido!!!!!");
-        break;
-    }else{
-        console.log("Usuario denegado, te quedan " +(3-i)+ " intentos");
-    }
-}
-*/
-let tipoIngreso =  prompt ("Ingresa el tipo de ingreso de tu presupuesto");
-console.log ("Ingresa " + tipoIngreso);
-
-let presupuesto = parseInt(prompt("Ingresa el monto de tu presupuesto total"));
-console.log ("monto: $" + presupuesto);
-
-let acumulador = presupuesto;
-for (let i=1; i<=4;i++){
-
-    let descripcionGastos =  prompt ("Ingresa descripción de la transacción");
-    console.log ("descripcion: " + descripcionGastos);
-
-    let montoGastos = parseInt(prompt("Ingresa el monto de la transacción"));
-    console.log ("monto: $" + montoGastos); 
-
-    let categoriaGastos = prompt("Ingresa la categoría de tu gasto");
-    console.log ("La categoría es " + categoriaGastos);
-    acumulador = acumulador - montoGastos;
-    console.log("Todavia tenes para gastar: " + acumulador);
-}
-
-
-/*funciones
-function calcularGastos (presupuestoTotal, montoGasto){
-    let gastos=presupuesto - montoGastos;
-    console.log("Todavía tenes para gastar $" + gastos);
-}
-
-}
-function calcularTotal (totalGastos, masGastos){
-    let resta = gastos - montoGastos;
-    console.log("Todavía tenes para gastar $" + resta);
-}
-calcularGastos ()*/
-
 //Objetos
 
 function Transaccion (categoria, gasto, descripcion) {
@@ -159,10 +62,167 @@ const transacciones = [
 
 console.log(transacciones[0])
 
-//************************** */
-
 transacciones.forEach((transac) => console.log(transac.montoTransaccion));
 
 const encontrado = transacciones.find((transac) =>  transac.categoriaTransaccion =="Ropa")
 console.log (encontrado);
+*/
+
+
+
+const form = document.getElementById("transactionForm");
+
+var todasLasTransacciones;
+
+let campoDescripcion = document.getElementById ("transactionDescription");
+let campoMonto = document.getElementById ("transactionAmount");
+let campoCategoria = document.getElementById("transactionCategory");
+
+form.addEventListener("submit", validarFormulario);
+
+function validarFormulario(ev){
+   // if ((campoDescripcion.value=="")||(campoMonto.value=="")||(campoCategoria.value==""));
+   // alert ("ingrese datos validos");
+}
+
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    let transactionFormData = new FormData(form);
+    let transactionObj = convertFormDataToTransactionObj(transactionFormData);
+    // si es valido, se guarda
+    if (isValidTransactionForm(transactionObj)) {
+      saveTransactionObj(transactionObj);
+      insertRowInTransactionTable(transactionObj);
+      form.reset();  insertRowInTransactionTabl
+    } else {
+      alert ("error") 
+      //Mostrar error
+    }
+  });
+  
+function isValidTransactionForm(transactionObj) {
+    let isValidForm = true;
+  
+    if (!transactionObj["transactionDescription"]) {
+      alert("Te olvidaste de la descripción");
+      isValidForm = false;
+    }
+  
+    if (!transactionObj["transactionAmount"]) {
+      alert("Te olvidaste de poner un monto");
+      isValidForm = false;
+    } 
+  
+    else if (transactionObj["transactionAmount"] < 0) {
+      alert("No admite numeros negativos");
+      isValidForm = false;
+    }
+    if (!transactionObj["transactionCategory"]) {
+      alert("Debes seleccionar una categoria");
+      isValidForm = false;
+    }
+    return isValidForm;
+  
+function convertFormDataToTransactionObj(transactionFormData) {
+    let transactionDescription = transactionFormData.get(
+            "transactionDescription");
+    let transactionAmount = transactionFormData.get("transactionAmount");
+    let transactionCategory = transactionFormData.get("transactionCategory");
+    let transactionId = getNewTransactionId();
+    return {
+        transactionDescription: transactionDescription,
+        transactionAmount: transactionAmount,
+        transactionCategory: transactionCategory,
+        transactionId: transactionId,
+    };
+}
+    
+// Categorias
+
+function category() {
+  let allCategories = [
+    "Vivienda",
+    "Salario",
+    "Mercado",
+    "Ropa",
+    "Salidas",
+    "Otros",
+  ];
+  for (let index = 0; index < allCategories.length; index++) {
+    insertCategory(allCategories[index]);
+  }
+}
+
+function insertCategory(categoryName) {
+  const selectElement = document.getElementById("transactionCategory");
+  let htmlToInsert = `<option> ${categoryName} </option>`;
+  selectElement.insertAdjacentHTML("beforeend", htmlToInsert);
+}
+
+function mostrarEnPantallaArrayDeTransaccion(transactionObjArr) {
+  transactionObjArr.forEach(function (arrayElement) {
+    insertRowInTransactionTable(arrayElement);
+  });
+}
+
+function getNewTransactionId() {
+  let lastTransactionId = localStorage.getItem("lastTransactionId") || "-1";
+  let newTransactionId = JSON.parse(lastTransactionId) + 1;
+  localStorage.setItem("lastTransactionId", JSON.stringify(newTransactionId));
+  return newTransactionId;
+}
+
+//Tabla
+function insertRowInTransactionTable(transactionObj) {
+  let transactionTableRef = document.getElementById("transactionTable");
+
+  let newTransactionRowRef = transactionTableRef.insertRow(-1);
+  newTransactionRowRef.setAttribute(
+    "data-transaction-id",
+    transactionObj["transactionId"]
+  );
+
+  newTypeCellRef = newTransactionRowRef.insertCell(0);
+  newTypeCellRef.textContent = transactionObj["transactionDescription"];
+
+  newTypeCellRef = newTransactionRowRef.insertCell(1);
+  newTypeCellRef.textContent = transactionObj["transactionAmount"];
+
+  newTypeCellRef = newTransactionRowRef.insertCell(2);
+  newTypeCellRef.textContent = transactionObj["transactionCategory"];
+
+  let newDeleteCell = newTransactionRowRef.insertCell(3);
+  let deleteButton = document.createElement("button");
+  deleteButton.textContent = "Eliminar";
+  newDeleteCell.appendChild(deleteButton);
+
+  deleteButton.addEventListener("click", (event) => {
+    let transactionRow = event.target.parentNode.parentNode;
+    let transactionId = transactionRow.getAttribute("data-transaction-id");
+    transactionRow.remove();
+    deleteTransactionObj(transactionId);
+  });
+}
+
+function deleteTransactionObj(transactionId) {
+  let transactionObjArr = JSON.parse(localStorage.getItem("transactionData"));
+
+  let transactionIndexInArray = transactionObjArr.findIndex(
+    (element) => element.transactionId == transactionId
+  );
+  //Elimino el elemento de esa poscicion
+  transactionObjArr.splice(transactionIndexInArray, 1);
+  let transactionArrayJSON = JSON.stringify(transactionObjArr);
+  localStorage.setItem("transactionData", transactionArrayJSON);
+}
+
+function saveTransactionObj(transactionObj) {
+  let myTransactionArray =
+    JSON.parse(localStorage.getItem("transactionData")) || [];
+  myTransactionArray.push(transactionObj);
+  //Convierto  mi array de transaccion a json
+  let transactionArrayJSON = JSON.stringify(myTransactionArray);
+  //Guardo mi array de transaccion en formato JSON en el local storage
+  localStorage.setItem("transactionData", transactionArrayJSON);
+}}
 
