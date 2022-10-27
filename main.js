@@ -72,7 +72,7 @@ console.log (encontrado);
 
 const form = document.getElementById("transactionForm");
 
-var todasLasTransacciones;
+let todasLasTransacciones;
 
 let campoDescripcion = document.getElementById ("transactionDescription");
 let campoMonto = document.getElementById ("transactionAmount");
