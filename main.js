@@ -1,7 +1,6 @@
 const form = document.getElementById("transactionForm");
 
 let todasLasTransacciones;
-let transactionType = document.getElementById("transactionType")
 let campoDescripcion = document.getElementById ("transactionDescription");
 let campoMonto = document.getElementById ("transactionAmount");
 let campoCategoria = document.getElementById("transactionCategory");
