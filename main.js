@@ -1,79 +1,7 @@
-/*
-//Objetos
-
-function Transaccion (categoria, gasto, descripcion) {
-        this.categoria = categoriaGastos;
-        this.gasto = montoGastos;
-        this.descripcion = descripcionGastos;
-    }
-
-const transaccion1 = new Transaccion(categoriaGastos, montoGastos, descripcionGastos);
-
-console.log(transaccion1)
-
-function Ingreso (tipo, monto) {
-    this.Ingreso = tipoIngreso;
-    this.monto = presupuesto;
-}
-const ingreso1 = new Ingreso(tipoIngreso, presupuesto);
-
-console.log(ingreso1)
-
-// array de objetos
-
-
-const transacciones = [
-    {
-        tipoTransaccion: "Egreso",
-        descripcionTransaccion: descripcionGastos,
-        montoTransaccion: montoGastos,
-        categoriaTransaccion: categoriaGastos,
-        Id: 1,
-      },
-    {
-        tipoTransaccion: "Ingreso",
-        descripcionTransaccion: "cobre el sueldo",
-        montoTransaccion: "200000",
-        categoriaTransaccion: "otro",
-        Id: 10,
-      },
-      {
-        tipoTransaccion: "Egreso",
-        descripcionTransaccion: "compre una gorra",
-        montoTransaccion: "3500",
-        categoriaTransaccion: "Ropa",
-        Id: 11,
-      },
-      {
-        tipoTransaccion: "Egreso",
-        descripcionTransaccion: "supermercado",
-        montoTransaccion: "20000",
-        categoriaTransaccion: "Mercado",
-        Id: 21,
-      },
-      {
-        tipoTransaccion: "Egreso",
-        descripcionTransaccion: "sali a comer hamburguesas",
-        montoTransaccion: "5600",
-        categoriaTransaccion: "Salida",
-        Id: 41,
-      },
-];
-
-console.log(transacciones[0])
-
-transacciones.forEach((transac) => console.log(transac.montoTransaccion));
-
-const encontrado = transacciones.find((transac) =>  transac.categoriaTransaccion =="Ropa")
-console.log (encontrado);
-*/
-
-
-
 const form = document.getElementById("transactionForm");
 
-var todasLasTransacciones;
-
+let todasLasTransacciones;
+let transactionType = document.getElementById("transactionType")
 let campoDescripcion = document.getElementById ("transactionDescription");
 let campoMonto = document.getElementById ("transactionAmount");
 let campoCategoria = document.getElementById("transactionCategory");
@@ -88,21 +16,36 @@ function validarFormulario(ev){
 form.addEventListener("submit", function (event) {
     event.preventDefault();
     let transactionFormData = new FormData(form);
-    let transactionObj = convertFormDataToTransactionObj(transactionFormData);
+    let transactionObj = convertFormDataToTransactionObj (transactionFormData);
     // si es valido, se guarda
     if (isValidTransactionForm(transactionObj)) {
       saveTransactionObj(transactionObj);
       insertRowInTransactionTable(transactionObj);
-      form.reset();  insertRowInTransactionTabl
+      form.reset(); insertRowInTransactionTable
     } else {
       alert ("error") 
       //Mostrar error
     }
   });
+
+function convertFormDataToTransactionObj(transactionFormData) {
+    let transactionType = transactionFormData.get("transactionType");
+    let transactionDescription = transactionFormData.get("transactionDescription");
+    let transactionAmount = transactionFormData.get("transactionAmount");
+    let transactionCategory = transactionFormData.get("transactionCategory");
+    let transactionId = getNewTransactionId();
+    return {
+        transactionType: transactionType,
+        transactionDescription: transactionDescription,
+        transactionAmount: transactionAmount,
+        transactionCategory: transactionCategory,
+        transactionId: transactionId,
+    };
+}
   
 function isValidTransactionForm(transactionObj) {
     let isValidForm = true;
-  
+  /*
     if (!transactionObj["transactionDescription"]) {
       alert("Te olvidaste de la descripción");
       isValidForm = false;
@@ -112,7 +55,6 @@ function isValidTransactionForm(transactionObj) {
       alert("Te olvidaste de poner un monto");
       isValidForm = false;
     } 
-  
     else if (transactionObj["transactionAmount"] < 0) {
       alert("No admite numeros negativos");
       isValidForm = false;
@@ -122,21 +64,9 @@ function isValidTransactionForm(transactionObj) {
       isValidForm = false;
     }
     return isValidForm;
-  
-function convertFormDataToTransactionObj(transactionFormData) {
-    let transactionDescription = transactionFormData.get(
-            "transactionDescription");
-    let transactionAmount = transactionFormData.get("transactionAmount");
-    let transactionCategory = transactionFormData.get("transactionCategory");
-    let transactionId = getNewTransactionId();
-    return {
-        transactionDescription: transactionDescription,
-        transactionAmount: transactionAmount,
-        transactionCategory: transactionCategory,
-        transactionId: transactionId,
-    };
-}
-    
+  };
+*/
+
 // Categorias
 
 function category() {
@@ -171,7 +101,6 @@ function getNewTransactionId() {
   localStorage.setItem("lastTransactionId", JSON.stringify(newTransactionId));
   return newTransactionId;
 }
-
 //Tabla
 function insertRowInTransactionTable(transactionObj) {
   let transactionTableRef = document.getElementById("transactionTable");
@@ -182,22 +111,25 @@ function insertRowInTransactionTable(transactionObj) {
     transactionObj["transactionId"]
   );
 
-  newTypeCellRef = newTransactionRowRef.insertCell(0);
-  newTypeCellRef.textContent = transactionObj["transactionDescription"];
+  let newTypeCellRef = newTransactionRowRef.insertCell(0);
+  newTypeCellRef.textContent = transactionObj["transactionType"];
 
   newTypeCellRef = newTransactionRowRef.insertCell(1);
-  newTypeCellRef.textContent = transactionObj["transactionAmount"];
+  newTypeCellRef.textContent = transactionObj["transactionDescription"];
 
   newTypeCellRef = newTransactionRowRef.insertCell(2);
+  newTypeCellRef.textContent = transactionObj["transactionAmount"];
+
+  newTypeCellRef = newTransactionRowRef.insertCell(3);
   newTypeCellRef.textContent = transactionObj["transactionCategory"];
 
-  let newDeleteCell = newTransactionRowRef.insertCell(3);
+  let newDeleteCell = newTransactionRowRef.insertCell(4);
   let deleteButton = document.createElement("button");
   deleteButton.textContent = "Eliminar";
   newDeleteCell.appendChild(deleteButton);
 
   deleteButton.addEventListener("click", (event) => {
-    let transactionRow = event.target.parentNode.parentNode;
+    let transactionRow = event.target.parentNode;
     let transactionId = transactionRow.getAttribute("data-transaction-id");
     transactionRow.remove();
     deleteTransactionObj(transactionId);
@@ -225,4 +157,3 @@ function saveTransactionObj(transactionObj) {
   //Guardo mi array de transaccion en formato JSON en el local storage
   localStorage.setItem("transactionData", transactionArrayJSON);
 }}
-
